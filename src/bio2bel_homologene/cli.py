@@ -2,6 +2,8 @@
 
 import click
 
+from .constants import DEFAULT_CACHE_CONNECTION
+
 
 @click.group()
 def main():
@@ -9,7 +11,7 @@ def main():
 
 
 @main.command()
-@click.option('-c', '--connection', help="Custom OLS base url")
+@click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
 def populate(connection):
     """Creates and populates the database"""
     from .manager import Manager
@@ -18,7 +20,7 @@ def populate(connection):
 
 
 @main.command()
-@click.option('-c', '--connection', help="Custom OLS base url")
+@click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
 def drop(connection):
     """Drops all tables"""
     from .manager import Manager
@@ -27,9 +29,11 @@ def drop(connection):
 
 
 @main.command()
-def web():
+@click.option('-c', '--connection', help="Defaults to {}".format(DEFAULT_CACHE_CONNECTION))
+def web(connection):
     """Run the web app"""
-    from .web import app
+    from .web import create_application
+    app = create_application(connection=connection)
     app.run(host='0.0.0.0', port=5000)
 
 
