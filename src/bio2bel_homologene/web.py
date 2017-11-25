@@ -36,8 +36,8 @@ def get_species_genes(tax_id):
     ])
 
 
-def add_admin(app, session, url=None):
-    admin = flask_admin.Admin(app, url=(url or '/'))
+def add_admin(app, session, **kwargs):
+    admin = flask_admin.Admin(app, **kwargs)
     admin.add_view(ModelView(Homologene, session))
     admin.add_view(ModelView(Gene, session))
     admin.add_view(ModelView(Species, session))
