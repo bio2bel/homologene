@@ -6,9 +6,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from tqdm import tqdm
 
-from bio2bel_homologene.constants import DEFAULT_CACHE_CONNECTION
+from bio2bel.utils import get_connection
 from bio2bel_homologene.models import Base, Gene, Homologene, Species
 from bio2bel_homologene.parser import download_homologene
+from .constants import MODULE_NAME
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,7 @@ class Manager(object):
         """
         :param Optional[str] connection: The connection string
         """
-        self.connection = connection or DEFAULT_CACHE_CONNECTION
+        self.connection = get_connection(MODULE_NAME, connection=connection)
         log.info('connected to %s', self.connection)
         self.engine = create_engine(self.connection)
         self.session_maker = sessionmaker(bind=self.engine, autoflush=False, expire_on_commit=False)

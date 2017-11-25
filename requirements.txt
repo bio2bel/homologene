@@ -2,3 +2,4 @@ click
 pandas
 sqlalchemy
 tqdm
+bio2bel
