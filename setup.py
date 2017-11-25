@@ -15,6 +15,9 @@ INSTALL_REQUIRES = [
     'tqdm',
 ]
 ENTRY_POINTS = {
+    'bio2bel': [
+        'homologene = bio2bel_homologene',
+    ],
     'console_scripts': [
         'bio2bel_homologene = bio2bel_homologene.cli:main'
     ]
